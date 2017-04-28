@@ -48,6 +48,7 @@ module.exports = (robot) ->
             result += "- " + trouble + "\r\n"
           msg.send "#{title}\r\n#{result}"
 
+  # 全体
   robot.hear /train (.+)/i, (msg) ->
     room = msg.message.user.room
 
@@ -57,6 +58,7 @@ module.exports = (robot) ->
     if room == "C55RDV935" or room == "C51N74CLS"
       searchMain(msg)
 
+ # 個人宛
   robot.respond /train (.+)/i, (msg) ->
     searchMain(msg)
 
@@ -78,6 +80,18 @@ module.exports = (robot) ->
       searchTrain(nagoya_higashiyama, msg)
     else if target == '市バス'
       searchBus(nagoya_koutsukyoku, msg)
+
+    else if target == 'higashiyama'
+      searchTrainCron(nagoya_higashiyama)
+    else if target == 'meijo'
+      searchTrainCron(nagoya_meijo)
+    else if target == 'tsurumai'
+      searchTrainCron(nagoya_turumai)
+    else if target == 'sakuradori'
+      searchTrainCron(nagoya_sakuradori)
+    else if target == 'inuyama'
+      searchTrainCron(meitetsu_inuyama)
+
     else if target == 'help'
       msg.send "train コマンドのヘルプ\r\n
 使用法: train [オプション]\r\n\r\n
@@ -88,7 +102,12 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
           t.ando\r\n
           m.yang\r\n
           a.nagura\r\n
-          y.hieda"
+          y.hieda\r\n\r\n
+higashiyama：東山線\r\n
+meijo：名城線\r\n
+tsurumai：鶴舞線\r\n
+sakuradori：桜通線\r\n
+inuyama：犬山線"
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
