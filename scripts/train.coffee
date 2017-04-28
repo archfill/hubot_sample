@@ -76,7 +76,7 @@ module.exports = (robot) ->
     #   searchTrain()
     # else if target === 'tk'
     #   searchTrain()
-    else if target === 'y.hieda'
+    else if target == 'y.hieda'
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
     else
