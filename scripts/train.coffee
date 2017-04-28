@@ -94,7 +94,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
   "Asia/Tokyo"
   ).start()
 
-  new cronJob('0 25 13 * * 1-5', () ->
+  new cronJob('0 35 13 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
     searchTrainCron(nagoya_meijo)
     searchTrainCron(nagoya_turumai)
