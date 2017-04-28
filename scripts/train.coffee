@@ -128,7 +128,7 @@ shibus：市バス"
     # スクレイピングでは取得できないため
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
-        return console.log('失敗しました')
+        return msg.send "バス情報取得に失敗しました。"
 
       data = JSON.parse(body.replace(/^\uFEFF/, ''))
       # robot.logger.info data
