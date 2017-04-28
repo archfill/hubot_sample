@@ -130,6 +130,7 @@ shibus：市バス"
       if error or response.statusCode != 200
         return msg.send "バス情報取得に失敗しました。"
 
+      # BOMに気を付けること
       data = JSON.parse(body.replace(/^\uFEFF/, ''))
       # robot.logger.info data
       # for obj in data
