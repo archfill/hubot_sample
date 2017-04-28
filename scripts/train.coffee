@@ -10,6 +10,19 @@
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 
+# 名古屋市営東山線
+nagoya_higashiyama = 'https://transit.yahoo.co.jp/traininfo/detail/240/0/'
+# 名古屋市営名城線
+nagoya_meijo = 'https://transit.yahoo.co.jp/traininfo/detail/241/0/'
+# 名古屋市営鶴舞線
+nagoya_turumai = 'https://transit.yahoo.co.jp/traininfo/detail/242/0/'
+# 名古屋市営桜通線
+nagoya_sakuradori = 'https://transit.yahoo.co.jp/traininfo/detail/243/0/'
+# 名古屋市営上飯田線
+nagoya_kamiiida = 'https://transit.yahoo.co.jp/traininfo/detail/400/0/'
+# 名古屋市営名港線
+nagoya_meikou = 'https://transit.yahoo.co.jp/traininfo/detail/405/0/'
+
 module.exports = (robot) ->
 
   searchAllTrain = (msg) ->
@@ -31,52 +44,19 @@ module.exports = (robot) ->
 
   robot.respond /train (.+)/i, (msg) ->
     target = msg.match[1]
-    # 有楽町線
-    metro_yu = 'http://transit.yahoo.co.jp/traininfo/detail/137/0/'
-    # 京浜東北線
-    jr_kt = 'http://transit.yahoo.co.jp/traininfo/detail/22/0/'
-    # 山手線
-    jr_ym = 'http://transit.yahoo.co.jp/traininfo/detail/21/0/'
-    # 埼京線
-    jr_sk = 'http://transit.yahoo.co.jp/traininfo/detail/50/0/'
-    # 湘南新宿ライン
-    jr_ss = 'http://transit.yahoo.co.jp/traininfo/detail/25/0/'
-    # 京王線
-    keio = 'http://transit.yahoo.co.jp/traininfo/detail/102/0/'
-
-    # 名古屋市営東山線
-    nagoya_higashiyama = 'https://transit.yahoo.co.jp/traininfo/detail/240/0/'
-    # 名古屋市営名城線
-    nagoya_meijo = 'https://transit.yahoo.co.jp/traininfo/detail/241/0/'
-    # 名古屋市営鶴舞線
-    nagoya_turumai = 'https://transit.yahoo.co.jp/traininfo/detail/242/0/'
-    # 名古屋市営桜通線
-    nagoya_sakuradori = 'https://transit.yahoo.co.jp/traininfo/detail/243/0/'
-    # 名古屋市営上飯田線
-    nagoya_kamiiida = 'https://transit.yahoo.co.jp/traininfo/detail/400/0/'
-    # 名古屋市営名港線
-    nagoya_meikou = 'https://transit.yahoo.co.jp/traininfo/detail/405/0/'
-
-    # if target == "kaoru"
-    #   searchTrain(metro_yu, msg)
-    #   searchTrain(jr_kt, msg)
-    #   searchTrain(keio, msg)
-    # else if target == "yuri"
-    #   searchTrain(jr_ym, msg)
-    #   searchTrain(jr_sk, msg)
-    #   searchTrain(jr_ss, msg)
 
     if target == "all"
       searchAllTrain(msg)
-    # else if target === 'a.nagura'
+    # else if target == 'a.nagura'
     #   searchTrain()
-    # else if target === 'y.yang'
+    # else if target == 'y.yang'
     #   searchTrain()
-    # else if target === 't.ando'
+    # else if target == 't.ando'
     #   searchTrain()
-    # else if target === 'tk'
+    # else if target == 'tk'
     #   searchTrain()
     else if target == 'y.hieda'
+      msg.send "#{target}さんへ\r\n"
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
     else
@@ -91,26 +71,13 @@ module.exports = (robot) ->
         info = $('.trouble p').text()
         msg.send "#{title}は遅れているみたい。♪ へ(´д ｀へ)♪ (ノ´ д ｀)ノ♪ \n#{info}"
 
-  new cronJob('0 0 7 * * 1-5', () ->
-    # 有楽町線
-    metro_yu = 'http://transit.yahoo.co.jp/traininfo/detail/137/0/'
-    # 京浜東北線
-    jr_kt = 'http://transit.yahoo.co.jp/traininfo/detail/22/0/'
-    searchTrainCron(metro_yu)
-    searchTrainCron(jr_kt)
-  ).start()
-
-  new cronJob('0 0 8 * * 1,3,5', () ->
-    # 山手線
-    jr_ym = 'http://transit.yahoo.co.jp/traininfo/detail/21/0/'
-    # 埼京線
-    jr_sk = 'http://transit.yahoo.co.jp/traininfo/detail/50/0/'
-    # 湘南新宿ライン
-    jr_ss = 'http://transit.yahoo.co.jp/traininfo/detail/25/0/'
-
-    searchTrainCron(jr_ym)
-    searchTrainCron(jr_sk)
-    searchTrainCron(jr_ss)
+  new cronJob('0 0 8 * * 1-5', () ->
+    searchTrainCron(nagoya_higashiyama)
+    searchTrainCron(nagoya_meijo)
+    searchTrainCron(nagoya_turumai)
+    searchTrainCron(nagoya_sakuradori)
+    searchTrainCron(nagoya_kamiiida)
+    searchTrainCron(nagoya_meikou)
   ).start()
 
   searchTrainCron = (url) ->
