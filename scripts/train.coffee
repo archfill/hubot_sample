@@ -82,15 +82,15 @@ module.exports = (robot) ->
       searchBus(nagoya_koutsukyoku, msg)
 
     else if target == 'higashiyama'
-      searchTrainCron(nagoya_higashiyama)
+      searchTrain(nagoya_higashiyama, msg)
     else if target == 'meijo'
-      searchTrainCron(nagoya_meijo)
+      searchTrain(nagoya_meijo, msg)
     else if target == 'tsurumai'
-      searchTrainCron(nagoya_turumai)
+      searchTrain(nagoya_turumai, msg)
     else if target == 'sakuradori'
-      searchTrainCron(nagoya_sakuradori)
+      searchTrain(nagoya_sakuradori, msg)
     else if target == 'inuyama'
-      searchTrainCron(meitetsu_inuyama)
+      searchTrain(meitetsu_inuyama, msg)
 
     else if target == 'help'
       msg.send "train コマンドのヘルプ\r\n
