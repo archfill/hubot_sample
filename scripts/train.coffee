@@ -49,42 +49,18 @@ module.exports = (robot) ->
           msg.send "#{title}\r\n#{result}"
 
   robot.hear /train (.+)/i, (msg) ->
-    target = msg.match[1]
-
     room = msg.message.user.room
 
     # チャンネル指定
     # hiedabottest
     # notifications
     if room == "C55RDV935" or room == "C51N74CLS"
-      if target == "all"
-        searchAllTrain(msg)
-      else if target == 'a.nagura'
-        msg.send "登録してないよ。"
-      else if target == 'm.yang'
-        msg.send "登録してないよ。"
-      else if target == 't.ando'
-        searchTrain(meitetsu_inuyama, msg)
-      else if target == 'tk'
-        msg.send "登録してないよ。"
-      else if target == 'y.hieda'
-        searchTrain(nagoya_turumai, msg)
-        searchTrain(nagoya_higashiyama, msg)
-      else if target == '市バス'
-        searchBus(nagoya_koutsukyoku, msg)
-      else if target == 'help'
-        msg.send "train コマンドのヘルプ\r\n
-  使用法: train [オプション]\r\n\r\n
-  オプション\r\n
-  all：yahoo路線情報の運行情報　中部を表示\r\n
-  ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
-            tk\r\n
-            t.ando\r\n
-            m.yang\r\n
-            a.nagura\r\n
-            y.hieda"
+      searchMain(msg)
 
   robot.respond /train (.+)/i, (msg) ->
+    searchMain(msg)
+
+  searchMain = (msg) ->
     target = msg.match[1]
 
     if target == "all"
