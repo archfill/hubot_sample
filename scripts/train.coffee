@@ -10,7 +10,7 @@
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 request = require('request')
-# stripBom = require('strip-bom')
+stripBom = require('strip-bom')
 
 # 名古屋市交通局　運行情報
 nagoya_koutsukyoku = 'http://www.kotsu.city.nagoya.jp/jp/pc/emergency/index.html'
@@ -129,8 +129,7 @@ inuyama：犬山線"
       if error or response.statusCode != 200
         return console.log('失敗しました')
 
-      # data = JSON.parse(stripBom(body))
-      data = JSON.parse(body)
+      data = JSON.parse(stripBom(body))
       # robot.logger.info data
       # for obj in data
       for obj in data
