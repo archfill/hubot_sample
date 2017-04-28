@@ -56,16 +56,24 @@ module.exports = (robot) ->
     # else if target == 'tk'
     #   searchTrain()
     else if target == 'y.hieda'
-      msg.send "#{target}さんへ\r\n"
+      msg.send "#{target}さんへ"
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
     else if target == 'help'
-      msgSendHelp()
+      msg.send "train コマンドのヘルプ"
+      msg.send "使用法: train [オプション]"
+      msg.send ""
+      msg.send "オプション"
+      msg.send " all：yahoo路線情報の運行情報　中部を表示"
+      msg.send " ユーザ名：入力されたユーザ名に該当する運行情報を表示"
+      msg.send ""
+      msg.send "          tk"
+      msg.send "          t.ando"
+      msg.send "          y.yang"
+      msg.send "          a.nagura"
+      msg.send "          y.hieda"
     else
-      msg.send "#{target}は検索できないよ。Σ (￣ロ￣|||)"
-
-  msgSendHelp = ->
-    msg.send "train コマンドのヘルプ\r\n使用法: train [オプション]\r\n"
+      msg.send "#{target}はわかりません。"
 
   searchTrain = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
