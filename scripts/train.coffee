@@ -90,6 +90,15 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     searchTrainCron(nagoya_meikou)
   ).start()
 
+  new cronJob('0 0 13 * * 1-5', () ->
+    searchTrainCron(nagoya_higashiyama)
+    searchTrainCron(nagoya_meijo)
+    searchTrainCron(nagoya_turumai)
+    searchTrainCron(nagoya_sakuradori)
+    searchTrainCron(nagoya_kamiiida)
+    searchTrainCron(nagoya_meikou)
+  ).start()
+
   searchTrainCron = (url) ->
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
