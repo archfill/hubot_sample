@@ -73,6 +73,7 @@ module.exports = (robot) ->
     else if target == 'm.yang'
       msg.send "登録してないよ。"
     else if target == 't.ando'
+      searchTrain(nagoya_turumai, msg)
       searchTrain(meitetsu_inuyama, msg)
     else if target == 'tk'
       searchBus(nagoya_koutsukyoku, msg)
