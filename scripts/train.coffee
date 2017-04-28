@@ -9,6 +9,8 @@
 
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
+request = require('request');
+stripBom = require('strip-bom');
 
 # 名古屋市交通局　運行情報
 nagoya_koutsukyoku = 'http://www.kotsu.city.nagoya.jp/jp/pc/emergency/index.html'
@@ -121,10 +123,18 @@ inuyama：犬山線"
         msg.send "#{title}は遅れているみたい。\n#{info}"
 
   searchBus = (url, msg) ->
-    cheerio.fetch url, (err, $, res) ->
-      title = "市バス"
-      message = $('#B_LINE_TEXT').text()
-      msg.send "#{title}\n#{message}"
+    # バス専用処理
+    # スクレイピングでは取得できないため
+    request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
+      if error or response.statusCode != 200
+        return console.log('失敗しました')
+
+      data = JSON.parse(stripBom(body))
+      # robot.logger.info data
+      # for obj in data
+      for obj in data
+        if obj.rosen_id == "B_LINE"
+          msg.send "#{obj.traffic_message}")
 
   new cronJob('0 0 8 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
