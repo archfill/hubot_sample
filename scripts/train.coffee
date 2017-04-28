@@ -92,8 +92,8 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
   searchBus = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
       title = "市バス"
-      message = "#{$('p#B_LINE_TEXT').text()}"
-      msg.send "#{title}\r\n#{message}"
+      message = $('p#B_LINE_TEXT').text()
+      msg.send "#{title}\n#{message}"
 
   new cronJob('0 0 8 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
