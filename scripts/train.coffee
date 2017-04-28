@@ -87,10 +87,11 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     searchTrainCron(nagoya_turumai)
     searchTrainCron(nagoya_sakuradori)
     searchTrainCron(nagoya_kamiiida)
-    searchTrainCron(nagoya_meikou),
-    null,
-    true,
-    "Asia/Tokyo"
+    searchTrainCron(nagoya_meikou)
+
+  null,
+  true,
+  "Asia/Tokyo"
   ).start()
 
   new cronJob('0 25 13 * * 1-5', () ->
@@ -99,10 +100,11 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     searchTrainCron(nagoya_turumai)
     searchTrainCron(nagoya_sakuradori)
     searchTrainCron(nagoya_kamiiida)
-    searchTrainCron(nagoya_meikou),
-    null,
-    true,
-    "Asia/Tokyo"
+    searchTrainCron(nagoya_meikou)
+
+  null,
+  true,
+  "Asia/Tokyo"
   ).start()
 
   searchTrainCron = (url) ->
