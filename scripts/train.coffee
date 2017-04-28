@@ -10,7 +10,6 @@
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 request = require('request')
-# stripBom = require('strip-bom')
 
 # 名古屋市交通局　運行情報
 nagoya_koutsukyoku = 'http://www.kotsu.city.nagoya.jp/jp/pc/emergency/index.html'
@@ -76,11 +75,12 @@ module.exports = (robot) ->
     else if target == 't.ando'
       searchTrain(meitetsu_inuyama, msg)
     else if target == 'tk'
-      msg.send "登録してないよ。"
+      searchBus(nagoya_koutsukyoku, msg)
     else if target == 'y.hieda'
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
-    else if target == '市バス'
+
+    else if target == 'shibus'
       searchBus(nagoya_koutsukyoku, msg)
 
     else if target == 'higashiyama'
@@ -109,7 +109,8 @@ higashiyama：東山線\r\n
 meijo：名城線\r\n
 tsurumai：鶴舞線\r\n
 sakuradori：桜通線\r\n
-inuyama：犬山線"
+inuyama：犬山線\r\n
+shibus：市バス"
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
