@@ -53,7 +53,10 @@ module.exports = (robot) ->
 
     room = msg.message.user.room
 
-    if room == "C55RDV935"
+    # チャンネル指定
+    # hiedabottest
+    # notifications
+    if room == "C55RDV935" and room == "C51N74CLS"
       if target == "all"
         searchAllTrain(msg)
       else if target == 'a.nagura'
