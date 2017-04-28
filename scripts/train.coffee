@@ -14,7 +14,7 @@ module.exports = (robot) ->
 
   searchAllTrain = (msg) ->
     # send HTTP request
-    baseUrl = 'http://transit.loco.yahoo.co.jp/traininfo/gc/13/'
+    baseUrl = 'https://transit.yahoo.co.jp/traininfo/area/5/'
     cheerio.fetch baseUrl, (err, $, res) ->
       if $('.elmTblLstLine.trouble').find('a').length == 0
         msg.send "事故や遅延情報はありません"
