@@ -92,7 +92,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
   searchBus = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
       title = "市バス"
-      message = "#{$('#B_LINE_TEXT').text()}"
+      message = "#{$('p#B_LINE_TEXT').text()}"
       msg.send "#{title}\r\n#{message}"
 
   new cronJob('0 0 8 * * 1-5', () ->
@@ -112,7 +112,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
-        robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。 "
+        robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
       else
         info = $('.trouble p').text()
         robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
