@@ -47,24 +47,23 @@ module.exports = (robot) ->
 
     if target == "all"
       searchAllTrain(msg)
-    # else if target == 'a.nagura'
-    #   searchTrain()
-    # else if target == 'y.yang'
-    #   searchTrain()
-    # else if target == 't.ando'
-    #   searchTrain()
-    # else if target == 'tk'
-    #   searchTrain()
+    else if target == 'a.nagura'
+      msg.send "登録してないよ。"
+    else if target == 'y.yang'
+      msg.send "登録してないよ。"
+    else if target == 't.ando'
+      msg.send "登録してないよ。"
+    else if target == 'tk'
+      msg.send "登録してないよ。"
     else if target == 'y.hieda'
-      msg.send "#{target}さんへ"
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
     else if target == 'help'
       msg.send "train コマンドのヘルプ\r\n
 使用法: train [オプション]\r\n\r\n
 オプション\r\n
- all：yahoo路線情報の運行情報　中部を表示\r\n
- ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
+all：yahoo路線情報の運行情報　中部を表示\r\n
+ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
           tk\r\n
           t.ando\r\n
           y.yang\r\n
