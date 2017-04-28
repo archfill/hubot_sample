@@ -59,8 +59,14 @@ module.exports = (robot) ->
       msg.send "#{target}さんへ\r\n"
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
+    else if target == 'help'
+      msgSendHelp()
     else
       msg.send "#{target}は検索できないよ。Σ (￣ロ￣|||)"
+
+  msgSendHelp = () ->
+    msg.send "train コマンドのヘルプ\r\n"
+           + "使用法: train [オプション]\r\n"
 
   searchTrain = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
