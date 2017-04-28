@@ -60,20 +60,18 @@ module.exports = (robot) ->
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
     else if target == 'help'
-      msg.send "train コマンドのヘルプ"
-      msg.send "使用法: train [オプション]"
-      msg.send ""
-      msg.send "オプション"
-      msg.send " all：yahoo路線情報の運行情報　中部を表示"
-      msg.send " ユーザ名：入力されたユーザ名に該当する運行情報を表示"
-      msg.send ""
-      msg.send "          tk"
-      msg.send "          t.ando"
-      msg.send "          y.yang"
-      msg.send "          a.nagura"
-      msg.send "          y.hieda"
+      msg.send "train コマンドのヘルプ\r\n
+使用法: train [オプション]\r\n\r\n
+オプション\r\n
+ all：yahoo路線情報の運行情報　中部を表示\r\n
+ ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
+          tk\r\n
+          t.ando\r\n
+          y.yang\r\n
+          a.nagura\r\n
+          y.hieda"
     else
-      msg.send "#{target}はわかりません。"
+      msg.send "#{target}はわかりません。(´･ω ･`)"
 
   searchTrain = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
@@ -97,7 +95,7 @@ module.exports = (robot) ->
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
-        robot.send {room: "#mybot"}, "#{title}は遅れてないよ。━ ━ (´･ω ･`)━ ━ "
+        robot.send {room: "#notifications"}, "#{title}は遅れてないよ。━ ━ (´･ω ･`)━ ━ "
       else
         info = $('.trouble p').text()
-        robot.send {room: "#mybot"}, "#{title}は遅れているみたい。♪ へ(´д ｀へ)♪ (ノ´ д ｀)ノ♪ \n#{info}"
+        robot.send {room: "#notifications"}, "#{title}は遅れているみたい。♪ へ(´д ｀へ)♪ (ノ´ д ｀)ノ♪ \n#{info}"
