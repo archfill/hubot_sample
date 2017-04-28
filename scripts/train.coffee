@@ -44,16 +44,41 @@ module.exports = (robot) ->
     # 京王線
     keio = 'http://transit.yahoo.co.jp/traininfo/detail/102/0/'
 
-    if target == "kaoru"
-      searchTrain(metro_yu, msg)
-      searchTrain(jr_kt, msg)
-      searchTrain(keio, msg)
-    else if target == "yuri"
-      searchTrain(jr_ym, msg)
-      searchTrain(jr_sk, msg)
-      searchTrain(jr_ss, msg)
-    else if target == "all"
+    # 名古屋市営東山線
+    nagoya_higashiyama = 'https://transit.yahoo.co.jp/traininfo/detail/240/0/'
+    # 名古屋市営名城線
+    nagoya_meijo = 'https://transit.yahoo.co.jp/traininfo/detail/241/0/'
+    # 名古屋市営鶴舞線
+    nagoya_turumai = 'https://transit.yahoo.co.jp/traininfo/detail/242/0/'
+    # 名古屋市営桜通線
+    nagoya_sakuradori = 'https://transit.yahoo.co.jp/traininfo/detail/243/0/'
+    # 名古屋市営上飯田線
+    nagoya_kamiiida = 'https://transit.yahoo.co.jp/traininfo/detail/400/0/'
+    # 名古屋市営名港線
+    nagoya_meikou = 'https://transit.yahoo.co.jp/traininfo/detail/405/0/'
+
+    # if target == "kaoru"
+    #   searchTrain(metro_yu, msg)
+    #   searchTrain(jr_kt, msg)
+    #   searchTrain(keio, msg)
+    # else if target == "yuri"
+    #   searchTrain(jr_ym, msg)
+    #   searchTrain(jr_sk, msg)
+    #   searchTrain(jr_ss, msg)
+
+    if target == "all"
       searchAllTrain(msg)
+    else if target === 'a.nagura'
+      searchTrain()
+    else if target === 'y.yang'
+      searchTrain()
+    else if target === 't.ando'
+      searchTrain()
+    else if target === 'tk'
+      searchTrain()
+    else if target === 'y.hieda'
+      searchTrain(nagoya_turumai, msg)
+      searchTrain(nagoya_higashiyama, msg)
     else
       msg.send "#{target}は検索できないよ。Σ (￣ロ￣|||)"
 
