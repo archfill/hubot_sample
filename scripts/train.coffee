@@ -72,6 +72,17 @@ module.exports = (robot) ->
         searchTrain(nagoya_higashiyama, msg)
       else if target == '市バス'
         searchBus(nagoya_koutsukyoku, msg)
+      else if target == 'help'
+        msg.send "train コマンドのヘルプ\r\n
+  使用法: train [オプション]\r\n\r\n
+  オプション\r\n
+  all：yahoo路線情報の運行情報　中部を表示\r\n
+  ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
+            tk\r\n
+            t.ando\r\n
+            m.yang\r\n
+            a.nagura\r\n
+            y.hieda"
 
   robot.respond /train (.+)/i, (msg) ->
     target = msg.match[1]
@@ -117,7 +128,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
   searchBus = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
       title = "市バス"
-      message = $('p#B_LINE_TEXT').text()
+      message = $('#B_LINE_TEXT').text()
       msg.send "#{title}\n#{message}"
 
   new cronJob('0 0 8 * * 1-5', () ->
