@@ -64,9 +64,8 @@ module.exports = (robot) ->
     else
       msg.send "#{target}は検索できないよ。Σ (￣ロ￣|||)"
 
-  msgSendHelp = () ->
-    msg.send "train コマンドのヘルプ\r\n"
-           + "使用法: train [オプション]\r\n"
+  msgSendHelp = ->
+    msg.send "train コマンドのヘルプ\r\n使用法: train [オプション]\r\n"
 
   searchTrain = (url, msg) ->
     cheerio.fetch url, (err, $, res) ->
