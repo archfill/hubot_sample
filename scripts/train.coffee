@@ -68,14 +68,14 @@ module.exports = (robot) ->
 
     if target == "all"
       searchAllTrain(msg)
-    else if target === 'a.nagura'
-      searchTrain()
-    else if target === 'y.yang'
-      searchTrain()
-    else if target === 't.ando'
-      searchTrain()
-    else if target === 'tk'
-      searchTrain()
+    # else if target === 'a.nagura'
+    #   searchTrain()
+    # else if target === 'y.yang'
+    #   searchTrain()
+    # else if target === 't.ando'
+    #   searchTrain()
+    # else if target === 'tk'
+    #   searchTrain()
     else if target === 'y.hieda'
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
