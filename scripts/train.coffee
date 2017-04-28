@@ -48,6 +48,13 @@ module.exports = (robot) ->
             result += "- " + trouble + "\r\n"
           msg.send "#{title}\r\n#{result}"
 
+  robot.hear /train (.+)/i, (msg) ->
+    target = msg.match[1]
+
+    room = msg.message.user.room
+
+    msg.send "#{room}"
+
   robot.respond /train (.+)/i, (msg) ->
     target = msg.match[1]
 
