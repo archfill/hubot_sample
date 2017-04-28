@@ -76,10 +76,10 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
-        msg.send "#{title}は遅れてないよ。━ ━ (´･ω ･`)━ ━ "
+        msg.send "#{title}は遅れてないよ。"
       else
         info = $('.trouble p').text()
-        msg.send "#{title}は遅れているみたい。♪ へ(´д ｀へ)♪ (ノ´ д ｀)ノ♪ \n#{info}"
+        msg.send "#{title}は遅れているみたい。\n#{info}"
 
   new cronJob('0 0 8 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
@@ -103,7 +103,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
-        robot.send {room: "#notifications"}, "#{title}は遅れてないよ。━ ━ (´･ω ･`)━ ━ "
+        robot.send {room: "#notifications"}, "#{title}は遅れてないよ。 "
       else
         info = $('.trouble p').text()
-        robot.send {room: "#notifications"}, "#{title}は遅れているみたい。♪ へ(´д ｀へ)♪ (ノ´ д ｀)ノ♪ \n#{info}"
+        robot.send {room: "#notifications"}, "#{title}は遅れているみたい。\n#{info}"
