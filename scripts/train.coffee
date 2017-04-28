@@ -53,7 +53,22 @@ module.exports = (robot) ->
 
     room = msg.message.user.room
 
-    msg.send "#{room}"
+    if room == "C55RDV935"
+      if target == "all"
+        searchAllTrain(msg)
+      else if target == 'a.nagura'
+        msg.send "登録してないよ。"
+      else if target == 'm.yang'
+        msg.send "登録してないよ。"
+      else if target == 't.ando'
+        searchTrain(meitetsu_inuyama)
+      else if target == 'tk'
+        msg.send "登録してないよ。"
+      else if target == 'y.hieda'
+        searchTrain(nagoya_turumai, msg)
+        searchTrain(nagoya_higashiyama, msg)
+      else if target == '市バス'
+        searchBus(nagoya_koutsukyoku, msg)
 
   robot.respond /train (.+)/i, (msg) ->
     target = msg.match[1]
