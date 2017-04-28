@@ -10,6 +10,9 @@
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 
+# 名古屋市交通局　運行情報
+nagoya_koutsukyoku = 'http://www.kotsu.city.nagoya.jp/jp/pc/emergency/index.html'
+
 # 名古屋市営東山線
 nagoya_higashiyama = 'https://transit.yahoo.co.jp/traininfo/detail/240/0/'
 # 名古屋市営名城線
@@ -22,6 +25,8 @@ nagoya_sakuradori = 'https://transit.yahoo.co.jp/traininfo/detail/243/0/'
 nagoya_kamiiida = 'https://transit.yahoo.co.jp/traininfo/detail/400/0/'
 # 名古屋市営名港線
 nagoya_meikou = 'https://transit.yahoo.co.jp/traininfo/detail/405/0/'
+# 名鉄犬山線
+meitetsu_inuyama = 'https://transit.yahoo.co.jp/traininfo/detail/220/0/'
 
 module.exports = (robot) ->
 
@@ -50,15 +55,17 @@ module.exports = (robot) ->
       searchAllTrain(msg)
     else if target == 'a.nagura'
       msg.send "登録してないよ。"
-    else if target == 'y.yang'
+    else if target == 'm.yang'
       msg.send "登録してないよ。"
     else if target == 't.ando'
-      msg.send "登録してないよ。"
+      searchTrain(meitetsu_inuyama)
     else if target == 'tk'
       msg.send "登録してないよ。"
     else if target == 'y.hieda'
       searchTrain(nagoya_turumai, msg)
       searchTrain(nagoya_higashiyama, msg)
+    else if target == '市バス'
+      searchBus(nagoya_koutsukyoku, msg)
     else if target == 'help'
       msg.send "train コマンドのヘルプ\r\n
 使用法: train [オプション]\r\n\r\n
@@ -67,7 +74,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
 ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
           tk\r\n
           t.ando\r\n
-          y.yang\r\n
+          m.yang\r\n
           a.nagura\r\n
           y.hieda"
     else
@@ -82,6 +89,12 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
         info = $('.trouble p').text()
         msg.send "#{title}は遅れているみたい。\n#{info}"
 
+  searchBus = (url, msg) ->
+    cheerio.fetch url, (err, $, res) ->
+      title = "市バス"
+      message = "#{$('#B_LINE_TEXT').text()}"
+    msg.send "#{title}\r\n#{message}"
+
   new cronJob('0 0 8 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
     searchTrainCron(nagoya_meijo)
@@ -89,20 +102,7 @@ all：yahoo路線情報の運行情報　中部を表示\r\n
     searchTrainCron(nagoya_sakuradori)
     searchTrainCron(nagoya_kamiiida)
     searchTrainCron(nagoya_meikou)
-
-  null,
-  true,
-  "Asia/Tokyo"
-  ).start()
-
-  new cronJob('0 8 14 * * 1-5', () ->
-    searchTrainCron(nagoya_higashiyama)
-    searchTrainCron(nagoya_meijo)
-    searchTrainCron(nagoya_turumai)
-    searchTrainCron(nagoya_sakuradori)
-    searchTrainCron(nagoya_kamiiida)
-    searchTrainCron(nagoya_meikou)
-
+    searchTrainCron(meitetsu_inuyama)
   null,
   true,
   "Asia/Tokyo"
