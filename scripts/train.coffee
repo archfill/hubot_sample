@@ -9,8 +9,8 @@
 
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
-request = require('request');
-stripBom = require('strip-bom');
+request = require('request')
+stripBom = require('strip-bom')
 
 # 名古屋市交通局　運行情報
 nagoya_koutsukyoku = 'http://www.kotsu.city.nagoya.jp/jp/pc/emergency/index.html'
