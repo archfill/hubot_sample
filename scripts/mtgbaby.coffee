@@ -7,7 +7,7 @@ request = require('request')
 # 質問内容
 mtg_message_list = ['今日の体調は？','今日の意気込みは？','今日のタスクは？忙しそう？','今日は社外への外出予定がある？','今日の帰宅予定は何時？','この後個別に上長に相談したいことある？']
 # 会話回数
-mtg_respond_count = {'y.hieda':1}
+mtg_respond_count = {}
 mtg_day = {}
 mtg_request_save = {}
 
@@ -81,10 +81,15 @@ module.exports = (robot) ->
 
       edit_respond_count++
       if message_lengih < edit_respond_count
+        mtgSendChannel
         mtg_respond_count[user] = 1
         mtg_day[user] = dateString
       else
         mtg_respond_count[user] = edit_respond_count
+
+  mtgSendChannel ->
+    room_id = "C55RDV935"
+    robot.send {room: "#{room_id}"}, "TEST"
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
