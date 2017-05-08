@@ -41,6 +41,13 @@ module.exports = (robot) ->
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
+
+    dateString = ""
+    newDate = new Date()
+    dateString += (newDate.getMonth() + 1)
+    dateString += newDate.getDate()
+    dateString += newDate.getFullYear()
+
     message_lengih = mtg_message_list.length
     user = msg.message.user.name
     edit_respond_count = 1
@@ -61,7 +68,7 @@ module.exports = (robot) ->
     mtg_request_save[user] = edit_request_array
 
     for key,val of mtg_request_save
-      msg.send "#{key} , #{mtg_message} , #{val} #{new Date()}"
+      msg.send "#{key} , #{mtg_message} , #{val} #{dateString}"
 
     edit_respond_count++
     if message_lengih < edit_respond_count
