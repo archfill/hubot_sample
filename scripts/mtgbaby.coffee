@@ -40,15 +40,13 @@ module.exports = (robot) ->
   mtgMessage = (msg) ->
     user = msg.message.user.name
     edit_array = []
-    for val,i in mtg_request_save
-      if user == val[0]
+    for key,val of mtg_request_save
+      if user == key
         edit_array = val
 
     edit_array.push(msg.match[1])
 
     mtg_request_save[user] = edit_array
-
-    msg.send "#{mtg_request_save}"
 
     for key,val of mtg_request_save
       msg.send "#{key} #{val}"
