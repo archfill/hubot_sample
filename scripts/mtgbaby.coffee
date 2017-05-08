@@ -6,7 +6,7 @@ request = require('request')
 
 # 会話回数
 mtg_respond_count = ['y.hieda':['6']]
-mtg_request_save = []
+mtg_request_save = {}
 
 module.exports = (robot) ->
 
@@ -46,10 +46,12 @@ module.exports = (robot) ->
 
     edit_array.push(msg.match[1])
 
-    mtg_request_save.push(user:edit_array)
+    mtg_request_save[user] = edit_array
 
     msg.send "#{mtg_request_save}"
 
+    for key,val of mtg_request_save
+      msg.send "#{key} #{val}"
     # for val,i in mtg_respond_count
     #   msg.send "#{i} #{val}"
 
