@@ -38,7 +38,7 @@ module.exports = (robot) ->
 
   mtgMessage = (msg) ->
     for val,i in mtg_respond_count
-      msg.send "#{i}"
+      msg.send "#{i} #{val}"
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
