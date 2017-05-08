@@ -5,7 +5,8 @@ request = require('request')
 # heroku_config = messages: JSON.parse(process.env.HUBOT_USER_CONFIG ? '[]')
 
 # 会話回数
-mtg_respond_count = [['y.hieda','6']]
+mtg_respond_count = ['y.hieda':['6']]
+mtg_request_save = []
 
 module.exports = (robot) ->
 
@@ -37,8 +38,20 @@ module.exports = (robot) ->
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
-    for val,i in mtg_respond_count
-      msg.send "#{i} #{val}"
+    user = msg.message.user.name
+    edit_array = []
+    for val,i in mtg_request_save
+      if user == val[0]
+        edit_array = val
+
+    edit_array.push(msg.match[1])
+
+    mtg_request_save.push(user:edit_array)
+
+    msg.send "#{mtg_request_save}"
+
+    # for val,i in mtg_respond_count
+    #   msg.send "#{i} #{val}"
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
