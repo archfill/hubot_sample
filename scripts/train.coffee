@@ -1,12 +1,3 @@
-# Description:
-#   電車遅延情報をSlackに投稿する
-#
-# Commands:
-#   hubot train < kaoru | yuri | all > - Return train info
-#
-# Author:
-#   Kaoru Hotate
-
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 request = require('request')
