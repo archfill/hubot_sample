@@ -2,12 +2,12 @@ cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 request = require('request')
 
-heroku_config = messages: JSON.parse(process.env.HUBOT_USER_CONFIG ? '[]')
+# heroku_config = messages: JSON.parse(process.env.HUBOT_USER_CONFIG ? '[]')
 
 module.exports = (robot) ->
 
   # 全体
-  robot.hear /train (.+)/i, (msg) ->
+  robot.hear /mtg (.+)/i, (msg) ->
     room = msg.message.user.room
 
     # チャンネル指定
