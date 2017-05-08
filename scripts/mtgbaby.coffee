@@ -37,7 +37,7 @@ module.exports = (robot) ->
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
-    for i in [i..mtg_respond_count.length-1]
+    for val,i in mtg_respond_count
       msg.send "#{i}"
 
   # new cronJob('0 30 7 * * 1-5', () ->
