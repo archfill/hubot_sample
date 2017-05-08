@@ -44,9 +44,9 @@ module.exports = (robot) ->
 
     dateString = ""
     newDate = new Date()
-    dateString += (newDate.getMonth() + 1)
+    dateString += newDate.getFullYear() + '/'
+    dateString += (newDate.getMonth() + 1) + '/'
     dateString += newDate.getDate()
-    dateString += newDate.getFullYear()
 
     message_lengih = mtg_message_list.length
     user = msg.message.user.name
