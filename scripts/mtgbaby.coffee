@@ -52,29 +52,39 @@ module.exports = (robot) ->
     user = msg.message.user.name
     edit_respond_count = 1
     mtg_message = ''
-    for key,val of mtg_respond_count
-      if user == key
-        edit_respond_count = val
-
-    mtg_message = mtg_message_list[edit_respond_count-1]
-
     edit_request_array = []
-    for key,val of mtg_request_save
+    mtg_user_date = ''
+
+    for key,val of mtg_day
       if user == key
-        edit_request_array = val
+        mtg_user_date = val
 
-    edit_request_array.push(msg.match[1])
-
-    mtg_request_save[user] = edit_request_array
-
-    for key,val of mtg_request_save
-      msg.send "#{key} , #{mtg_message} , #{val} #{dateString}"
-
-    edit_respond_count++
-    if message_lengih < edit_respond_count
-      mtg_respond_count[user] = 1
+    if dateString == mtg_user_date
+      msg.send "今日のMTGは終わったよ。"
     else
-      mtg_respond_count[user] = edit_respond_count
+      for key,val of mtg_respond_count
+        if user == key
+          edit_respond_count = val
+
+      mtg_message = mtg_message_list[edit_respond_count-1]
+
+      for key,val of mtg_request_save
+        if user == key
+          edit_request_array = val
+
+      edit_request_array.push(msg.match[1])
+
+      mtg_request_save[user] = edit_request_array
+
+      for key,val of mtg_request_save
+        msg.send "#{key} , #{mtg_message} , #{val}"
+
+      edit_respond_count++
+      if message_lengih < edit_respond_count
+        mtg_respond_count[user] = 1
+        mtg_day[user] = dateString
+      else
+        mtg_respond_count[user] = edit_respond_count
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
