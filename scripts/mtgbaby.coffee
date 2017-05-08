@@ -63,6 +63,9 @@ module.exports = (robot) ->
     for key,val of mtg_request_save
       msg.send "#{key} , #{mtg_message} , #{val}"
 
+    edit_respond_count++
+    mtg_respond_count[user] = edit_respond_count
+
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
   #   searchTrainCron(nagoya_meijo)
