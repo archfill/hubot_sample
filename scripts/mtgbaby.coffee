@@ -31,6 +31,8 @@ module.exports = (robot) ->
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
+    title = "たいとる"
+    info = "いんふぉめーしょん"
     msg.send "#{title}は遅れているみたい。\n#{info}"
 
   # new cronJob('0 30 7 * * 1-5', () ->
