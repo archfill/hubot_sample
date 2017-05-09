@@ -138,6 +138,7 @@ shibus：市バス"
     searchTrainCron(nagoya_kamiiida)
     searchTrainCron(nagoya_meikou)
     searchTrainCron(meitetsu_inuyama)
+    searchBusCron()
   null,
   true,
   "Asia/Tokyo"
@@ -151,3 +152,16 @@ shibus：市バス"
       else
         info = $('.trouble p').text()
         robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
+
+  searchBusCron = () ->
+    request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
+      if error or response.statusCode != 200
+        return msg.send "バス情報取得に失敗しました。"
+
+      # BOMに気を付けること
+      data = JSON.parse(body.replace(/^\uFEFF/, ''))
+      # robot.logger.info data
+      # for obj in data
+      for obj in data
+        if obj.rosen_id == "B_LINE"
+          robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
