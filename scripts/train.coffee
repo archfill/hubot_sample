@@ -120,7 +120,7 @@ shibus：市バス"
     # スクレイピングでは取得できないため
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
-        return msg.send "バス情報取得に失敗しました。"
+        return msg.send "市バスの情報取得に失敗しました。"
 
       # BOMに気を付けること
       data = JSON.parse(body.replace(/^\uFEFF/, ''))
@@ -128,7 +128,8 @@ shibus：市バス"
       # for obj in data
       for obj in data
         if obj.rosen_id == "B_LINE"
-          msg.send "#{obj.traffic_message}")
+          msg.send "市バス：#{obj.traffic_message}"
+    )
 
   new cronJob('0 30 7 * * 1-5', () ->
     searchTrainCron(nagoya_higashiyama)
@@ -156,7 +157,7 @@ shibus：市バス"
   searchBusCron = () ->
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
-        return msg.send "バス情報取得に失敗しました。"
+        return robot.send "市バスの情報取得に失敗しました。"
 
       # BOMに気を付けること
       data = JSON.parse(body.replace(/^\uFEFF/, ''))
@@ -165,3 +166,4 @@ shibus：市バス"
       for obj in data
         if obj.rosen_id == "B_LINE"
           robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
+    )
