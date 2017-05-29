@@ -79,14 +79,13 @@ module.exports = (robot) ->
       for key,val of mtg_request_save
         msg.send "#{key} , #{mtg_message} , #{val}"
 
+      edit_respond_count++
       if message_lengih < edit_respond_count
         mtgSendChannel()
         mtg_respond_count[user] = 1
         mtg_day[user] = dateString
       else
         mtg_respond_count[user] = edit_respond_count
-
-      edit_respond_count++
 
   mtgSendChannel = () ->
     room_id = "C55RDV935"
