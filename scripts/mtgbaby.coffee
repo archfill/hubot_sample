@@ -106,8 +106,8 @@ module.exports = (robot) ->
         console.log 'Unable to connect . Error:', err
       else
         console.log 'Connection established to', url
-        #Close connection
-        db.close()
+      #Close connection
+      db.close()
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
