@@ -108,7 +108,6 @@ module.exports = (robot) ->
         console.log 'Connection established to', url
         #Close connection
         db.close()
-      return
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
