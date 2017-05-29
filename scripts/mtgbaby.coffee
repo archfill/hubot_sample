@@ -1,6 +1,12 @@
 cheerio = require 'cheerio-httpcli'
 cronJob = require('cron').CronJob
 request = require('request')
+#Requiring the Mongodb package
+mongo = require 'mongodb'
+#Creating a MongoClient object
+MongoClient = mongo.MongoClient
+#Preparing the URL
+url = 'mongodb://heroku_ztml25kt:fg0gu4tnl8r7i88p6p0epp7ge1@ds155191.mlab.com:55191/heroku_ztml25kt'
 
 # heroku_config = messages: JSON.parse(process.env.HUBOT_USER_CONFIG ? '[]')
 
@@ -41,6 +47,8 @@ module.exports = (robot) ->
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
+
+    mongodb_connect()
 
     dateString = ""
     newDate = new Date()
@@ -90,6 +98,17 @@ module.exports = (robot) ->
   mtgSendChannel = () ->
     room_id = "C55RDV935"
     robot.send {room: "#{room_id}"}, "TEST"
+
+  mongodb_connect = () ->
+    #Connecting to the server
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+        #Close connection
+        db.close()
+      return
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
