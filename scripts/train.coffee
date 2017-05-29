@@ -167,3 +167,4 @@ shibus：市バス"
         if obj.rosen_id == "B_LINE"
           robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
     )
+    
