@@ -85,7 +85,8 @@ module.exports = (robot) ->
         mtg_day[user] = dateString
       else
         mtg_respond_count[user] = edit_respond_count
-     edit_respond_count++
+
+      edit_respond_count++
 
   mtgSendChannel = () ->
     room_id = "C55RDV935"
