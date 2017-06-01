@@ -106,8 +106,16 @@ module.exports = (robot) ->
         console.log 'Unable to connect . Error:', err
       else
         console.log 'Connection established to', url
-      #Close connection
-      db.close()
+        #Creating collection object
+        col = db.collection('My_collection')
+        #Inserting Documents
+        col.find({name: 'Ram'}).toArray (err, result)->
+        if err
+          console.log err
+        else
+          console.log 'Found:', result
+        #Close connection
+        db.close()
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
