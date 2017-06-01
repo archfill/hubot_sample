@@ -100,6 +100,7 @@ module.exports = (robot) ->
     robot.send {room: "#{room_id}"}, "TEST"
 
   mongodb_connect = () ->
+    console.log("眠い")
     #Connecting to the server
     MongoClient.connect url, (err, db) ->
       if err
