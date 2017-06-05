@@ -197,6 +197,8 @@ module.exports = (robot) ->
       return
 
   mongodb_create_collection = (collection_name) ->
+    console.log "#{url}"
+    console.log "#{collection_name}"
     #Connecting to the server
     MongoClient.connect url, (err, db) ->
       if err
