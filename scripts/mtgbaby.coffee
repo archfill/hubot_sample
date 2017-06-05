@@ -34,7 +34,8 @@ module.exports = (robot) ->
   #   mtgMain(msg)
 
   robot.respond /(.+)/i, (msg) ->
-    mtgMessage(msg)
+    #mtgMessage(msg)
+    otameshi()
 
   mtgMain = (msg) ->
     target = msg.match[1]
@@ -42,25 +43,11 @@ module.exports = (robot) ->
     if target == "all"
       msg.send "not all..."
     else if target == 'start'
-      #mtgMessage(msg)
-      #otameshi()
-      #Connecting to the server
-      console.log "#{url}"
-      MongoClient.connect url, (err, db) ->
-
-        if err
-          console.log 'Unable to connect . Error:', err
-        else
-          console.log 'Connection established to', url
-          #Close connection
-          db.close()
-        return
+      mtgMessage(msg)
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
   mtgMessage = (msg) ->
-
-    mongodb_connect()
 
     dateString = ""
     newDate = new Date()
