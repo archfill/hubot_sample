@@ -42,7 +42,8 @@ module.exports = (robot) ->
     if target == "all"
       msg.send "not all..."
     else if target == 'start'
-      mtgMessage(msg)
+      #mtgMessage(msg)
+      otameshi()
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
@@ -99,7 +100,10 @@ module.exports = (robot) ->
     room_id = "C55RDV935"
     robot.send {room: "#{room_id}"}, "TEST"
 
-  mongodb_connect = () ->
+  otameshi = () ->
+    mongodb_create_collection('test')
+
+  mongodb_select = (collection_name,param) ->
     #Connecting to the server
     MongoClient.connect url, (err, db) ->
       if err
@@ -107,15 +111,108 @@ module.exports = (robot) ->
       else
         console.log 'Connection established to', url
         #Creating collection object
-        col = db.collection('My_collection')
+        col = db.collection("#{collection_name}")
         #Inserting Documents
-        col.find({name: 'Ram'}).toArray (err, result)->
+        #col.find({name: 'Ram'}).toArray (err, result)->
+        col.find({"#{param}"}).toArray (err, result)->
         if err
           console.log err
         else
           console.log 'Found:', result
         #Close connection
         db.close()
+
+  mongodb_select_all = (collection_name) ->
+    #Connecting to the server
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+        #Creating collection object
+        col = db.collection("#{collection_name}")
+        #Inserting Documents
+        col.find().toArray (err, result)->
+        if err
+          console.log err
+        else
+          console.log 'Found:', result
+        #Close connection
+        db.close()
+
+  mongodb_insert  = (collection_name,doc) ->
+    #Connecting to the server
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+      #Creating collection
+      col = db.collection("#{collection_name}")
+
+      #Inserting documents
+      col.insert [doc], (err, result) ->
+        if err
+          console.log err
+        else
+          console.log "Documents inserted successfully"
+        #Close connection
+        db.close()
+        return
+      return
+
+  mongodb_update = (collection_name,key,value) ->
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+    	#Creating collection
+        col = db.collection("#{collection_name}")
+        #Reading Data
+        #col.update {name:'Ram'},{$set:{city:'Delhi'}},(err, result)->
+        col.update {"#{key}"},{$set:{"#{value}"}},(err, result)->
+          if err
+            console.log err
+          else
+          console.log "Document updated"
+
+          #Closing connection
+          db.close()
+    	  return
+      return
+
+  mongodb_delete = (collection_name) ->
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+    	#Creating collection
+        col = db.collection("#{collection_name}")
+        #Deleting Data
+        col.remove()
+        console.log "Document deleted"
+
+        #Closing connection
+        db.close()
+      return
+
+  mongodb_create_collection = (collection_name) ->
+    #Connecting to the server
+    MongoClient.connect url, (err, db) ->
+      if err
+        console.log 'Unable to connect . Error:', err
+      else
+        console.log 'Connection established to', url
+
+        #Create collection
+        col = db.collection("#{collection_name}")
+        console.log "Collection created successfully."
+
+        #Close connection
+        db.close()
+      return
 
   # new cronJob('0 30 7 * * 1-5', () ->
   #   searchTrainCron(nagoya_higashiyama)
