@@ -43,7 +43,16 @@ module.exports = (robot) ->
       msg.send "not all..."
     else if target == 'start'
       #mtgMessage(msg)
-      otameshi()
+      #otameshi()
+      #Connecting to the server
+      MongoClient.connect url, (err, db) ->
+        if err
+          console.log 'Unable to connect . Error:', err
+        else
+          console.log 'Connection established to', url
+          #Close connection
+          db.close()
+        return
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
