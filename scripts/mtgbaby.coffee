@@ -6,7 +6,7 @@ mongo = require 'mongodb'
 #Creating a MongoClient object
 MongoClient = mongo.MongoClient
 #Preparing the URL
-url = 'mongodb://heroku_ztml25kt:fg0gu4tnl8r7i88p6p0epp7ge1@ds155191.mlab.com:55191/heroku_ztml25kt'
+url = 'mongodb://heroku_ztml25kt:H34jt7fh@ds155191.mlab.com:55191/heroku_ztml25kt'
 
 # heroku_config = messages: JSON.parse(process.env.HUBOT_USER_CONFIG ? '[]')
 
