@@ -46,6 +46,7 @@ module.exports = (robot) ->
       #otameshi()
       #Connecting to the server
       MongoClient.connect url, (err, db) ->
+        console.log "#{url}"
         if err
           console.log 'Unable to connect . Error:', err
         else
