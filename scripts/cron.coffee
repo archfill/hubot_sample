@@ -7,7 +7,7 @@ module.exports = (robot) ->
     #product_thai_cm C5DCNLG3E
     #open_hieda C5BT4BJSU
     # cron_send_message("C55RDV935","test")
-    cron_send_message("C5BT4BJSU","y.hieda さん予定がありますよ。\r\n
+    cron_send_message("C55RDV935","y.hieda さん予定がありますよ。\r\n
 ■*タイCM　定例会*\r\n
 　13:00～14:00 @NIC MR3")
   null,
