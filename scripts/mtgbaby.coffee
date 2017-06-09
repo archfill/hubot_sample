@@ -35,8 +35,7 @@ module.exports = (robot) ->
 
   robot.respond /(.+)/i, (msg) ->
     #mtgMessage(msg)
-    #otameshi()
-    msg.emote "test"
+    otameshi()
 
   mtgMain = (msg) ->
     target = msg.match[1]
