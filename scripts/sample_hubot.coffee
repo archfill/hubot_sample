@@ -87,7 +87,9 @@ module.exports = (robot) ->
             value: '×',
             short: true
           }
-        ],
+        ]
+      },
+      {
         footer: 'hubot',
         footer_icon: 'https://hubot.github.com/assets/images/layout/hubot-avatar@2x.png',
         ts: timestamp
