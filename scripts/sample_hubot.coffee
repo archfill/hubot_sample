@@ -47,7 +47,7 @@ module.exports = (robot) ->
     client = robot.adapter.client
     client.web.chat.postMessage(room, '', options)
 
-  robot.respond /test2/, (res) ->
+  robot.respond /2ndtest/, (res) ->
     # Messageを受け取った部屋を取得
     # ここでは、respondで受け取っているためDMの部屋
     room = res.envelope.room
@@ -55,7 +55,7 @@ module.exports = (robot) ->
     timestamp = new Date/1000|0
 
     # https://api.slack.com/docs/message-attachments
-    title = 'user1'
+    title = '予定'
     attachments = [
       {
         fallback: "#{title}",
@@ -72,15 +72,10 @@ module.exports = (robot) ->
             value: '〇',
             short: true
           }
-        ],
-        footer: 'hubot',
-        footer_icon: 'https://hubot.github.com/assets/images/layout/hubot-avatar@2x.png',
-        ts: timestamp
+        ]
       },
       {
-        fallback: "#{title}",
         color: 'good',
-        pretext: "#{title}",
         fields: [
           {
             title: 'name',
