@@ -64,27 +64,12 @@ module.exports = (robot) ->
         fields: [
           {
             title: 'name',
-            value: 'user1',
+            value: 'user1\nuser2',
             short: true
           },
           {
             title: 'status',
-            value: '〇',
-            short: true
-          }
-        ]
-      },
-      {
-        color: 'good',
-        fields: [
-          {
-            title: 'name',
-            value: 'user2',
-            short: true
-          },
-          {
-            title: 'status',
-            value: '×',
+            value: '〇\n×',
             short: true
           }
         ]
