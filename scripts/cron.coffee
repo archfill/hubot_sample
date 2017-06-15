@@ -15,5 +15,18 @@ module.exports = (robot) ->
   "Asia/Tokyo"
   ).start()
 
+  new cronJob('0 0 9 * * 3', () ->
+    #hiedatest C55RDV935
+    #product_thai_cm C5DCNLG3E
+    #open_hieda C5BT4BJSU
+    # cron_send_message("C55RDV935","test")
+    cron_send_message("C55RDV935","y.hieda さん予定がありますよ。\r\n
+■タイ全体　定例会\r\n
+　16:00～17:00 @ミッドランド")
+  null,
+  true,
+  "Asia/Tokyo"
+  ).start()
+
   cron_send_message = (roomid,message) ->
     robot.send {room: "#{roomid}"}, "#{message}"
