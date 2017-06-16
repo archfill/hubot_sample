@@ -169,28 +169,27 @@ module.exports = (robot) ->
   ).start()
 
   searchTrainCron = (url) ->
+    field = {}
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
         #遅れてなければ通知しない
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
 
-        field = {}
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
-        return field
       else
         #info = $('.trouble p').text()
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
 
-        field = {}
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
-        return field
+    field
 
   searchBusCron = () ->
+    field = {}
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
         return robot.send "市バスの情報取得に失敗しました。"
@@ -204,20 +203,18 @@ module.exports = (robot) ->
           if obj.traffic_message == "平常通り運行しています。"
             #遅れていないので通知しない
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
-            field = {}
+
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            return field
           else
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
 
-            field = {}
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            return field
     )
+    field
 
   sendMsgAttachments = (room, fields) ->
 
