@@ -52,7 +52,7 @@ module.exports = (robot) ->
       fields = []
       searchTrainCron(nagoya_higashiyama,fields)
       console.log fields
-      sendMsgAttachments("C5U5KLF33",fields)
+      sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
 
  # 個人宛
