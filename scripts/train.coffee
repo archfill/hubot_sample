@@ -51,7 +51,7 @@ module.exports = (robot) ->
     if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
       fields = []
       fields.push(searchTrainCron(nagoya_higashiyama))
-      console.log fields
+      console.log JSON.stringify(fields)
       sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
 
