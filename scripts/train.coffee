@@ -52,9 +52,7 @@ module.exports = (robot) ->
 
  # 個人宛
   robot.respond /train (.+)/i, (msg) ->
-    room = msg.envelope.room
-    msg.send "#{room}"
-    #searchMain(msg)
+    searchMain(msg)
 
   searchMain = (msg) ->
     target = msg.match[1]
@@ -157,7 +155,7 @@ module.exports = (robot) ->
     searchTrainCron(nagoya_meikou,fields)
     searchTrainCron(meitetsu_inuyama,fields)
     searchBusCron(fields)
-    if fields.length
+    if fields.length > 0
       sendMsgAttachments("C55RDV935",fields)
   null,
   true,
