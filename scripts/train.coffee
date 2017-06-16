@@ -184,7 +184,7 @@ module.exports = (robot) ->
         field['short'] = false
         fields.push(field)
 
-  searchBusCron = () ->
+  searchBusCron = (fields) ->
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
         return robot.send "市バスの情報取得に失敗しました。"
