@@ -50,7 +50,7 @@ module.exports = (robot) ->
     # notifications_sandbox
     if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
       fields = []
-      fields.push(searchTrainCron(nagoya_higashiyama))
+      fields.push searchTrainCron(nagoya_higashiyama)
       console.log searchTrainCron(nagoya_higashiyama)
       sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
@@ -186,6 +186,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
+    field
 
   searchBusCron = () ->
     field = {}
