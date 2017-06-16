@@ -53,7 +53,7 @@ module.exports = (robot) ->
  # 個人宛
   robot.respond /train (.+)/i, (msg) ->
     room = msg.envelope.room
-    send.msg "#{room}"
+    msg.send "#{room}"
     #searchMain(msg)
 
   searchMain = (msg) ->
