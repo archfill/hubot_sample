@@ -129,42 +129,54 @@ module.exports = (robot) ->
     )
 
   new cronJob('0 30 7 * * 1-5', () ->
-    searchTrainCron(nagoya_higashiyama)
-    searchTrainCron(nagoya_meijo)
-    searchTrainCron(nagoya_turumai)
-    searchTrainCron(nagoya_sakuradori)
-    searchTrainCron(nagoya_kamiiida)
-    searchTrainCron(nagoya_meikou)
-    searchTrainCron(meitetsu_inuyama)
-    searchBusCron()
+    fields = []
+    searchTrainCron(nagoya_higashiyama,fields)
+    searchTrainCron(nagoya_meijo,fields)
+    searchTrainCron(nagoya_turumai,fields)
+    searchTrainCron(nagoya_sakuradori,fields)
+    searchTrainCron(nagoya_kamiiida,fields)
+    searchTrainCron(nagoya_meikou,fields)
+    searchTrainCron(meitetsu_inuyama,fields)
+    searchBusCron(fields)
+    if fields.length
+      sendMsgAttachments("C51N74CLS","運行情報",fields)
   null,
   true,
   "Asia/Tokyo"
   ).start()
 
-  new cronJob('0 30 17 * * 1-5', () ->
-    searchTrainCron(nagoya_higashiyama)
-    searchTrainCron(nagoya_meijo)
-    searchTrainCron(nagoya_turumai)
-    searchTrainCron(nagoya_sakuradori)
-    searchTrainCron(nagoya_kamiiida)
-    searchTrainCron(nagoya_meikou)
-    searchTrainCron(meitetsu_inuyama)
-    searchBusCron()
+  new cronJob('0 51 14 * * 1-5', () ->
+    fields = []
+    searchTrainCron(nagoya_higashiyama,fields)
+    searchTrainCron(nagoya_meijo,fields)
+    searchTrainCron(nagoya_turumai,fields)
+    searchTrainCron(nagoya_sakuradori,fields)
+    searchTrainCron(nagoya_kamiiida,fields)
+    searchTrainCron(nagoya_meikou,fields)
+    searchTrainCron(meitetsu_inuyama,fields)
+    searchBusCron(fields)
+    if fields.length
+      sendMsgAttachments("C55RDV935","運行情報",fields)
   null,
   true,
   "Asia/Tokyo"
   ).start()
 
-  searchTrainCron = (url) ->
+  searchTrainCron = (url,fields) ->
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
         #遅れてなければ通知しない
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
       else
-        info = $('.trouble p').text()
-        robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
+        #info = $('.trouble p').text()
+        #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
+
+        field = {}
+        field['title'] = "#{title}"
+        field['value'] = "#{info}"
+        field['short'] = false
+        fields.push(field)
 
   searchBusCron = () ->
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
@@ -181,6 +193,29 @@ module.exports = (robot) ->
             #遅れていないので通知しない
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
           else
-            robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
+            #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
+
+            field = {}
+            field['title'] = "市バス"
+            field['value'] = "#{obj.traffic_message}"
+            field['short'] = false
+            fields.push(field)
     )
+
+  sendMsgAttachments = (room, title, fields) ->
+    # おそらく当日日付を取得
+    timestamp = new Date/1000|0
+
+    # https://api.slack.com/docs/message-attachments
+    attachments = [
+      {
+        color: 'good',
+        fields: [fields]
+      }
+    ]
+
+    options = { as_user: true, link_names: 1, attachments: attachments }
+
+    client = robot.adapter.client
+    client.web.chat.postMessage(room, '', options)
 
