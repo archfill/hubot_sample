@@ -155,6 +155,7 @@ module.exports = (robot) ->
     searchTrainCron(nagoya_meikou,fields)
     searchTrainCron(meitetsu_inuyama,fields)
     searchBusCron(fields)
+    robot.send {room: "C55RDV935"}, "#{fields}"
     if fields.length > 0
       sendMsgAttachments("C55RDV935",fields)
   null,
