@@ -176,7 +176,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
-        console.log "#{field}"
+        console.log field
         fields.push(field)
       else
         #info = $('.trouble p').text()
