@@ -50,7 +50,7 @@ module.exports = (robot) ->
     # notifications_sandbox
     if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
       fields = []
-      searchTrainCron(nagoya_higashiyama,fields)
+      fields.push(searchTrainCron(nagoya_higashiyama))
       console.log JSON.stringify(fields)
       sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
@@ -135,14 +135,14 @@ module.exports = (robot) ->
 
   new cronJob('0 30 7 * * 1-5', () ->
     fields = []
-    searchTrainCron(nagoya_higashiyama,fields)
-    searchTrainCron(nagoya_meijo,fields)
-    searchTrainCron(nagoya_turumai,fields)
-    searchTrainCron(nagoya_sakuradori,fields)
-    searchTrainCron(nagoya_kamiiida,fields)
-    searchTrainCron(nagoya_meikou,fields)
-    searchTrainCron(meitetsu_inuyama,fields)
-    searchBusCron(fields)
+    fields.push(searchTrainCron(nagoya_higashiyama))
+    fields.push(searchTrainCron(nagoya_meijo))
+    fields.push(searchTrainCron(nagoya_turumai))
+    fields.push(searchTrainCron(nagoya_sakuradori))
+    fields.push(searchTrainCron(nagoya_kamiiida))
+    fields.push(searchTrainCron(nagoya_meikou))
+    fields.push(searchTrainCron(meitetsu_inuyama)
+    fields.push(searchBusCron())
     if fields.length
       sendMsgAttachments("C51N74CLS",fields)
   null,
@@ -152,14 +152,14 @@ module.exports = (robot) ->
 
   new cronJob('0 20 15 * * 1-5', () ->
     fields = []
-    searchTrainCron(nagoya_higashiyama,fields)
-    searchTrainCron(nagoya_meijo,fields)
-    searchTrainCron(nagoya_turumai,fields)
-    searchTrainCron(nagoya_sakuradori,fields)
-    searchTrainCron(nagoya_kamiiida,fields)
-    searchTrainCron(nagoya_meikou,fields)
-    searchTrainCron(meitetsu_inuyama,fields)
-    searchBusCron(fields)
+    fields.push(searchTrainCron(nagoya_higashiyama))
+    fields.push(searchTrainCron(nagoya_meijo))
+    fields.push(searchTrainCron(nagoya_turumai))
+    fields.push(searchTrainCron(nagoya_sakuradori))
+    fields.push(searchTrainCron(nagoya_kamiiida))
+    fields.push(searchTrainCron(nagoya_meikou))
+    fields.push(searchTrainCron(meitetsu_inuyama)
+    fields.push(searchBusCron())
     robot.send {room: "C55RDV935"}, "#{fields}"
     if fields.length > 0
       sendMsgAttachments("C55RDV935",fields)
@@ -168,7 +168,7 @@ module.exports = (robot) ->
   "Asia/Tokyo"
   ).start()
 
-  searchTrainCron = (url,fields) ->
+  searchTrainCron = (url) ->
     cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
@@ -179,7 +179,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
-        fields.push(JSON.parse(field))
+        return field
       else
         #info = $('.trouble p').text()
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
@@ -188,9 +188,9 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
-        fields.push(JSON.parse(field))
+        return field
 
-  searchBusCron = (fields) ->
+  searchBusCron = () ->
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
         return robot.send "市バスの情報取得に失敗しました。"
@@ -208,7 +208,7 @@ module.exports = (robot) ->
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            fields.push(JSON.parse(field))
+            return field
           else
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
 
@@ -216,7 +216,7 @@ module.exports = (robot) ->
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            fields.push(JSON.parse(field))
+            return field
     )
 
   sendMsgAttachments = (room, fields) ->
