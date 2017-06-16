@@ -47,9 +47,11 @@ module.exports = (robot) ->
     # チャンネル指定
     # hiedabottest
     # notifications
-    if room == "C55RDV935" or room == "C51N74CLS"
+    # notifications_sandbox
+    if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
       fields = []
       searchTrainCron(nagoya_higashiyama,fields)
+      sendMsgAttachments("C5U5KLF33",fields)
       #searchMain(msg)
 
  # 個人宛
@@ -176,7 +178,6 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
-        console.log field
         fields.push(field)
       else
         #info = $('.trouble p').text()
