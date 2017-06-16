@@ -51,7 +51,7 @@ module.exports = (robot) ->
     if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
       fields = []
       searchTrainCron(nagoya_higashiyama,fields)
-      console.log fields
+      console.log JSON.stringify(fields)
       sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
 
@@ -179,7 +179,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
-        fields.push(field)
+        fields.push(JSON.parse(field))
       else
         #info = $('.trouble p').text()
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
@@ -188,7 +188,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
-        fields.push(field)
+        fields.push(JSON.parse(field))
 
   searchBusCron = (fields) ->
     request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
@@ -208,7 +208,7 @@ module.exports = (robot) ->
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            fields.push(field)
+            fields.push(JSON.parse(field))
           else
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
 
@@ -216,12 +216,10 @@ module.exports = (robot) ->
             field['title'] = "市バス"
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
-            fields.push(field)
+            fields.push(JSON.parse(field))
     )
 
   sendMsgAttachments = (room, fields) ->
-    # おそらく当日日付を取得
-    timestamp = new Date/1000|0
 
     # https://api.slack.com/docs/message-attachments
     attachments = [
