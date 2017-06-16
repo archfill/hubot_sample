@@ -48,7 +48,9 @@ module.exports = (robot) ->
     # hiedabottest
     # notifications
     if room == "C55RDV935" or room == "C51N74CLS"
-      searchMain(msg)
+      fields = []
+      searchTrainCron(nagoya_higashiyama,fields)
+      #searchMain(msg)
 
  # 個人宛
   robot.respond /train (.+)/i, (msg) ->
@@ -139,7 +141,7 @@ module.exports = (robot) ->
     searchTrainCron(meitetsu_inuyama,fields)
     searchBusCron(fields)
     if fields.length
-      sendMsgAttachments("C51N74CLS","運行情報",fields)
+      sendMsgAttachments("C51N74CLS",fields)
   null,
   true,
   "Asia/Tokyo"
@@ -174,6 +176,7 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
+        console.log "#{field}"
         fields.push(field)
       else
         #info = $('.trouble p').text()
