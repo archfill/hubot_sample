@@ -186,7 +186,6 @@ module.exports = (robot) ->
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
-    field
 
   searchBusCron = () ->
     field = {}
