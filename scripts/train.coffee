@@ -169,28 +169,23 @@ module.exports = (robot) ->
   ).start()
 
   searchTrainCron = (url) ->
-    field = {}
-    cheerio.fetch url, (err, $, res) ->
+    field = cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
         #遅れてなければ通知しない
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
-
         field['title'] = "#{title}"
         field['value'] = "遅れてないよ。"
         field['short'] = false
       else
         #info = $('.trouble p').text()
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
-
         field['title'] = "#{title}"
         field['value'] = "#{info}"
         field['short'] = false
-    field
 
   searchBusCron = () ->
-    field = {}
-    request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
+    field = request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
         return robot.send "市バスの情報取得に失敗しました。"
 
@@ -214,7 +209,6 @@ module.exports = (robot) ->
             field['value'] = "#{obj.traffic_message}"
             field['short'] = false
     )
-    field
 
   sendMsgAttachments = (room, fields) ->
 
@@ -230,4 +224,3 @@ module.exports = (robot) ->
 
     client = robot.adapter.client
     client.web.chat.postMessage(room, '', options)
-
