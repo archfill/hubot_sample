@@ -168,6 +168,12 @@ module.exports = (robot) ->
       if $('.icnNormalLarge').length
         #遅れてなければ通知しない
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
+
+        field = {}
+        field['title'] = "#{title}"
+        field['value'] = "遅れてないよ。"
+        field['short'] = false
+        fields.push(field)
       else
         #info = $('.trouble p').text()
         #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
@@ -192,6 +198,11 @@ module.exports = (robot) ->
           if obj.traffic_message == "平常通り運行しています。"
             #遅れていないので通知しない
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
+            field = {}
+            field['title'] = "市バス"
+            field['value'] = "#{obj.traffic_message}"
+            field['short'] = false
+            fields.push(field)
           else
             #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
 
