@@ -52,7 +52,7 @@ module.exports = (robot) ->
       fields = []
       fields.push(searchTrainCron(nagoya_higashiyama))
       console.log fields
-      #sendMsgAttachments("C55RDV935",fields)
+      sendMsgAttachments("C55RDV935",fields)
       #searchMain(msg)
 
  # 個人宛
@@ -141,7 +141,7 @@ module.exports = (robot) ->
     fields.push(searchTrainCron(nagoya_sakuradori))
     fields.push(searchTrainCron(nagoya_kamiiida))
     fields.push(searchTrainCron(nagoya_meikou))
-    fields.push(searchTrainCron(meitetsu_inuyama)
+    fields.push(searchTrainCron(meitetsu_inuyama))
     fields.push(searchBusCron())
     if fields.length
       sendMsgAttachments("C51N74CLS",fields)
@@ -158,7 +158,7 @@ module.exports = (robot) ->
     fields.push(searchTrainCron(nagoya_sakuradori))
     fields.push(searchTrainCron(nagoya_kamiiida))
     fields.push(searchTrainCron(nagoya_meikou))
-    fields.push(searchTrainCron(meitetsu_inuyama)
+    fields.push(searchTrainCron(meitetsu_inuyama))
     fields.push(searchBusCron())
     robot.send {room: "C55RDV935"}, "#{fields}"
     if fields.length > 0
