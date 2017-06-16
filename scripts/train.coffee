@@ -145,7 +145,7 @@ module.exports = (robot) ->
   "Asia/Tokyo"
   ).start()
 
-  new cronJob('0 05 15 * * 1-5', () ->
+  new cronJob('0 15 15 * * 1-5', () ->
     fields = []
     searchTrainCron(nagoya_higashiyama,fields)
     searchTrainCron(nagoya_meijo,fields)
