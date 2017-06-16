@@ -52,7 +52,9 @@ module.exports = (robot) ->
 
  # 個人宛
   robot.respond /train (.+)/i, (msg) ->
-    searchMain(msg)
+    room = msg.envelope.room
+    send.msg "#{room}"
+    #searchMain(msg)
 
   searchMain = (msg) ->
     target = msg.match[1]
@@ -156,7 +158,7 @@ module.exports = (robot) ->
     searchTrainCron(meitetsu_inuyama,fields)
     searchBusCron(fields)
     if fields.length
-      sendMsgAttachments("C55RDV935","運行情報",fields)
+      sendMsgAttachments("C55RDV935",fields)
   null,
   true,
   "Asia/Tokyo"
@@ -213,7 +215,7 @@ module.exports = (robot) ->
             fields.push(field)
     )
 
-  sendMsgAttachments = (room, title, fields) ->
+  sendMsgAttachments = (room, fields) ->
     # おそらく当日日付を取得
     timestamp = new Date/1000|0
 
