@@ -47,13 +47,8 @@ module.exports = (robot) ->
     # チャンネル指定
     # hiedabottest
     # notifications
-    # notifications_sandbox
-    if room == "C55RDV935" or room == "C51N74CLS" or room == "C5U5KLF33"
-      fields = []
-      fields.push searchTrainCron(nagoya_higashiyama)
-      console.log searchTrainCron(nagoya_higashiyama)
-      sendMsgAttachments("C55RDV935",fields)
-      #searchMain(msg)
+    if room == "C55RDV935" or room == "C51N74CLS"
+      searchMain(msg)
 
  # 個人宛
   robot.respond /train (.+)/i, (msg) ->
@@ -65,6 +60,8 @@ module.exports = (robot) ->
     if target == "all"
       searchAllTrain(msg)
     else if target == 'a.nagura'
+      msg.send "登録してないよ。"
+    else if target == 'm.yang'
       msg.send "登録してないよ。"
     else if target == 't.ando'
       searchTrain(nagoya_turumai, msg)
@@ -90,21 +87,22 @@ module.exports = (robot) ->
       searchTrain(meitetsu_inuyama, msg)
 
     else if target == 'help'
-      msg.send "train コマンドのヘルプ\n" +
-                "使用法: train [オプション]\n\n" +
-                "オプション\n" +
-                "all：yahoo路線情報の運行情報　中部を表示\n" +
-                "ユーザ名：入力されたユーザ名に該当する運行情報を表示\n\n" +
-                "          tk\n" +
-                "          t.ando\n" +
-                "          a.nagura\n" +
-                "          y.hieda\n\n" +
-                "higashiyama：東山線\n" +
-                "meijo：名城線\n" +
-                "tsurumai：鶴舞線\n" +
-                "sakuradori：桜通線\n" +
-                "inuyama：犬山線\n" +
-                "shibus：市バス"
+      msg.send "train コマンドのヘルプ\r\n
+使用法: train [オプション]\r\n\r\n
+オプション\r\n
+all：yahoo路線情報の運行情報　中部を表示\r\n
+ユーザ名：入力されたユーザ名に該当する運行情報を表示\r\n\r\n
+          tk\r\n
+          t.ando\r\n
+          m.yang\r\n
+          a.nagura\r\n
+          y.hieda\r\n\r\n
+higashiyama：東山線\r\n
+meijo：名城線\r\n
+tsurumai：鶴舞線\r\n
+sakuradori：桜通線\r\n
+inuyama：犬山線\r\n
+shibus：市バス"
     else
       msg.send "#{target}はわかりません。(´･ω ･`)"
 
@@ -134,58 +132,30 @@ module.exports = (robot) ->
     )
 
   new cronJob('0 30 7 * * 1-5', () ->
-    fields = []
-    fields.push(searchTrainCron(nagoya_higashiyama))
-    fields.push(searchTrainCron(nagoya_meijo))
-    fields.push(searchTrainCron(nagoya_turumai))
-    fields.push(searchTrainCron(nagoya_sakuradori))
-    fields.push(searchTrainCron(nagoya_kamiiida))
-    fields.push(searchTrainCron(nagoya_meikou))
-    fields.push(searchTrainCron(meitetsu_inuyama))
-    fields.push(searchBusCron())
-    if fields.length
-      sendMsgAttachments("C51N74CLS",fields)
-  null,
-  true,
-  "Asia/Tokyo"
-  ).start()
-
-  new cronJob('0 20 15 * * 1-5', () ->
-    fields = []
-    fields.push(searchTrainCron(nagoya_higashiyama))
-    fields.push(searchTrainCron(nagoya_meijo))
-    fields.push(searchTrainCron(nagoya_turumai))
-    fields.push(searchTrainCron(nagoya_sakuradori))
-    fields.push(searchTrainCron(nagoya_kamiiida))
-    fields.push(searchTrainCron(nagoya_meikou))
-    fields.push(searchTrainCron(meitetsu_inuyama))
-    fields.push(searchBusCron())
-    robot.send {room: "C55RDV935"}, "#{fields}"
-    if fields.length > 0
-      sendMsgAttachments("C55RDV935",fields)
+    searchTrainCron(nagoya_higashiyama)
+    searchTrainCron(nagoya_meijo)
+    searchTrainCron(nagoya_turumai)
+    searchTrainCron(nagoya_sakuradori)
+    searchTrainCron(nagoya_kamiiida)
+    searchTrainCron(nagoya_meikou)
+    searchTrainCron(meitetsu_inuyama)
+    searchBusCron()
   null,
   true,
   "Asia/Tokyo"
   ).start()
 
   searchTrainCron = (url) ->
-    field = cheerio.fetch url, (err, $, res) ->
+    cheerio.fetch url, (err, $, res) ->
       title = "#{$('h1').text()}"
       if $('.icnNormalLarge').length
-        #遅れてなければ通知しない
-        #robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
-        field['title'] = "#{title}"
-        field['value'] = "遅れてないよ。"
-        field['short'] = false
+        robot.send {room: "C51N74CLS"}, "#{title}は遅れてないよ。"
       else
-        #info = $('.trouble p').text()
-        #robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
-        field['title'] = "#{title}"
-        field['value'] = "#{info}"
-        field['short'] = false
+        info = $('.trouble p').text()
+        robot.send {room: "C51N74CLS"}, "#{title}は遅れているみたい。\n#{info}"
 
   searchBusCron = () ->
-    field = request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
+    request.get("https://www.kotsu.city.nagoya.jp/jp/datas/latest_traffic.json?_#{new Date().getTime()}", (error, response, body) ->
       if error or response.statusCode != 200
         return robot.send "市バスの情報取得に失敗しました。"
 
@@ -195,32 +165,5 @@ module.exports = (robot) ->
       # for obj in data
       for obj in data
         if obj.rosen_id == "B_LINE"
-          if obj.traffic_message == "平常通り運行しています。"
-            #遅れていないので通知しない
-            #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
-
-            field['title'] = "市バス"
-            field['value'] = "#{obj.traffic_message}"
-            field['short'] = false
-          else
-            #robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
-
-            field['title'] = "市バス"
-            field['value'] = "#{obj.traffic_message}"
-            field['short'] = false
+          robot.send {room: "C51N74CLS"}, "市バス：#{obj.traffic_message}"
     )
-
-  sendMsgAttachments = (room, fields) ->
-
-    # https://api.slack.com/docs/message-attachments
-    attachments = [
-      {
-        color: 'good',
-        fields: [fields]
-      }
-    ]
-
-    options = { as_user: true, link_names: 1, attachments: attachments }
-
-    client = robot.adapter.client
-    client.web.chat.postMessage(room, '', options)
